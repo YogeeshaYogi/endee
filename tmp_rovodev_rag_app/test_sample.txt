@@ -1,0 +1,29 @@
+Sample Document for RAG Testing
+
+Introduction
+This is a sample document created to test the RAG (Retrieval-Augmented Generation) system. The document contains information about artificial intelligence, machine learning, and natural language processing.
+
+Artificial Intelligence
+Artificial Intelligence (AI) refers to the simulation of human intelligence in machines that are programmed to think and learn like humans. AI systems can perform tasks such as:
+- Pattern recognition
+- Decision making
+- Problem solving
+- Language understanding
+
+Machine Learning
+Machine Learning is a subset of artificial intelligence that focuses on the development of algorithms that can learn and improve from experience without being explicitly programmed. Key types include:
+- Supervised learning
+- Unsupervised learning  
+- Reinforcement learning
+
+Natural Language Processing
+Natural Language Processing (NLP) is a branch of AI that helps computers understand, interpret and manipulate human language. NLP combines computational linguistics with statistical and machine learning models.
+
+Vector Databases
+Vector databases are specialized databases designed to store and search high-dimensional vectors efficiently. They are crucial for:
+- Similarity search
+- Recommendation systems
+- Semantic search applications
+
+Conclusion
+This document serves as test content for demonstrating the capabilities of a RAG system in processing, storing, and retrieving information to answer user questions.

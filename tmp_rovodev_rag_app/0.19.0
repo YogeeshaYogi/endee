@@ -1,0 +1,31 @@
+Defaulting to user installation because normal site-packages is not writeable
+Collecting huggingface-hub
+  Using cached huggingface_hub-1.4.1-py3-none-any.whl.metadata (13 kB)
+Requirement already satisfied: filelock in C:\Users\91998\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages (from huggingface-hub) (3.16.0)
+Requirement already satisfied: fsspec>=2023.5.0 in C:\Users\91998\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages (from huggingface-hub) (2025.3.0)
+Collecting hf-xet<2.0.0,>=1.2.0 (from huggingface-hub)
+  Downloading hf_xet-1.2.0-cp37-abi3-win_amd64.whl.metadata (5.0 kB)
+Requirement already satisfied: httpx<1,>=0.23.0 in C:\Users\91998\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages (from huggingface-hub) (0.27.2)
+Requirement already satisfied: packaging>=20.9 in C:\Users\91998\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages (from huggingface-hub) (23.2)
+Requirement already satisfied: pyyaml>=5.1 in C:\Users\91998\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages (from huggingface-hub) (6.0.2)
+Requirement already satisfied: shellingham in C:\Users\91998\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages (from huggingface-hub) (1.5.4)
+Requirement already satisfied: tqdm>=4.42.1 in C:\Users\91998\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages (from huggingface-hub) (4.66.5)
+Collecting typer-slim (from huggingface-hub)
+  Downloading typer_slim-0.21.1-py3-none-any.whl.metadata (16 kB)
+Requirement already satisfied: typing-extensions>=4.1.0 in C:\Users\91998\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages (from huggingface-hub) (4.15.0)
+Requirement already satisfied: anyio in C:\Users\91998\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages (from httpx<1,>=0.23.0->huggingface-hub) (3.7.1)
+Requirement already satisfied: certifi in C:\Users\91998\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages (from httpx<1,>=0.23.0->huggingface-hub) (2024.8.30)
+Requirement already satisfied: httpcore==1.* in C:\Users\91998\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages (from httpx<1,>=0.23.0->huggingface-hub) (1.0.5)
+Requirement already satisfied: idna in C:\Users\91998\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages (from httpx<1,>=0.23.0->huggingface-hub) (3.7)
+Requirement already satisfied: sniffio in C:\Users\91998\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages (from httpx<1,>=0.23.0->huggingface-hub) (1.3.1)
+Requirement already satisfied: h11<0.15,>=0.13 in C:\Users\91998\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages (from httpcore==1.*->httpx<1,>=0.23.0->huggingface-hub) (0.14.0)
+Requirement already satisfied: colorama in C:\Users\91998\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages (from tqdm>=4.42.1->huggingface-hub) (0.4.6)
+Requirement already satisfied: click>=8.0.0 in C:\Users\91998\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages (from typer-slim->huggingface-hub) (8.1.7)
+Downloading huggingface_hub-1.4.1-py3-none-any.whl (553 kB)
+   ---------------------------------------- 553.3/553.3 kB 4.6 MB/s  0:00:00
+Downloading hf_xet-1.2.0-cp37-abi3-win_amd64.whl (2.9 MB)
+   ---------------------------------------- 2.9/2.9 MB 10.6 MB/s  0:00:00
+Downloading typer_slim-0.21.1-py3-none-any.whl (47 kB)
+Installing collected packages: hf-xet, typer-slim, huggingface-hub
+
+Successfully installed hf-xet-1.2.0 huggingface-hub-1.4.1 typer-slim-0.21.1
