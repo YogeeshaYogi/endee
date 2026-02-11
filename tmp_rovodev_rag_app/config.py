@@ -18,7 +18,16 @@ class Config:
     EMBEDDING_MODEL = os.getenv("EMBEDDING_MODEL", "all-MiniLM-L6-v2")
     EMBEDDING_DIMENSION = 384  # Dimension for all-MiniLM-L6-v2
     
-    # OpenAI Settings (for answer generation)
+    # AI Model Settings (for answer generation)
+    # Gemini Settings (Google AI)
+    GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+    GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-2.5-flash")
+    
+    # Ollama Settings (local AI)
+    OLLAMA_BASE_URL = os.getenv("OLLAMA_BASE_URL", "http://localhost:11434")
+    OLLAMA_MODEL = os.getenv("OLLAMA_MODEL", "llama2")
+    
+    # OpenAI Settings (fallback)
     OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
     OPENAI_MODEL = os.getenv("OPENAI_MODEL", "gpt-3.5-turbo")
     
@@ -41,7 +50,8 @@ class Config:
     @classmethod
     def validate(cls) -> bool:
         """Validate required configuration."""
-        if not cls.OPENAI_API_KEY:
-            print("Warning: OPENAI_API_KEY not set. Answer generation will not work.")
+        # Check for available AI providers
+        if not any([cls.GEMINI_API_KEY, cls.OLLAMA_BASE_URL, cls.OPENAI_API_KEY]):
+            print("Warning: No AI provider configured. Answer generation will not work.")
             return False
         return True

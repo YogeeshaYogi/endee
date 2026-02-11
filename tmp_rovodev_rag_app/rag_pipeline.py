@@ -11,6 +11,7 @@ from vector_store import EndeeVectorStore
 from document_processor import DocumentProcessor
 from embedding_service import EmbeddingService
 from answer_generator import AnswerGenerator
+from simple_text_answer import SimpleTextAnswerer
 
 logger = logging.getLogger(__name__)
 
@@ -22,7 +23,15 @@ class RAGPipeline:
         self.vector_store = EndeeVectorStore()
         self.doc_processor = DocumentProcessor()
         self.embedding_service = EmbeddingService()
-        self.answer_generator = AnswerGenerator()
+        
+        # Try Ollama first, fallback to simple text answerer
+        try:
+            self.answer_generator = AnswerGenerator()
+            self.use_ai = True
+        except Exception as e:
+            logger.warning(f"AI answer generator not available: {e}")
+            self.answer_generator = SimpleTextAnswerer()
+            self.use_ai = False
         
         # Ensure upload directory exists
         os.makedirs(Config.UPLOAD_DIR, exist_ok=True)
@@ -235,7 +244,11 @@ class RAGPipeline:
                 }
             
             # Generate answer using retrieved context
-            answer = self.answer_generator.generate_answer(question, contexts)
+            if self.use_ai:
+                answer = self.answer_generator.generate_answer(question, contexts)
+            else:
+                answer = self.answer_generator.generate_answer(question, contexts)
+                answer += "\n\n📝 Note: Using simple text extraction. Install Ollama for AI-powered answers."
             
             result = {
                 "status": "success",

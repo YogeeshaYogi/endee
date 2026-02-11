@@ -1,6 +1,6 @@
-"""Answer generation using OpenAI API."""
+"""Answer generation using Google Gemini API."""
 
-from openai import OpenAI
+import google.generativeai as genai
 from typing import List
 import logging
 from config import Config
@@ -8,57 +8,62 @@ from config import Config
 logger = logging.getLogger(__name__)
 
 class AnswerGenerator:
-    """Generates answers using OpenAI's language models."""
+    """Generates answers using Google Gemini language models."""
     
     def __init__(self, api_key: str = None, model: str = None):
-        self.api_key = api_key or Config.OPENAI_API_KEY
-        self.model = model or Config.OPENAI_MODEL
+        self.api_key = api_key or Config.GEMINI_API_KEY
+        self.model_name = model or Config.GEMINI_MODEL
         
         if self.api_key:
-            self.client = OpenAI(api_key=self.api_key)
+            genai.configure(api_key=self.api_key)
+            self.model = genai.GenerativeModel(self.model_name)
+            logger.info(f"Gemini client initialized with model: {self.model_name}")
         else:
-            self.client = None
-            logger.warning("OpenAI API key not provided. Answer generation will not work.")
+            self.model = None
+            logger.warning("Gemini API key not provided. Answer generation will not work.")
+            raise Exception("Gemini API key not configured")
     
     def generate_answer(self, question: str, contexts: List[str]) -> str:
         """Generate an answer based on the question and retrieved contexts."""
-        if not self.client:
-            return "OpenAI API key not configured. Cannot generate answers."
+        if not self.model:
+            return "Gemini API key not configured. Cannot generate answers."
         
         try:
             # Combine contexts
             combined_context = "\n\n".join(contexts)
             
-            # Create prompt
+            # Create prompt for Gemini
             prompt = self._create_prompt(question, combined_context)
             
-            # Generate answer using OpenAI
-            response = self.client.chat.completions.create(
-                model=self.model,
-                messages=[
-                    {
-                        "role": "system",
-                        "content": "You are a helpful assistant that answers questions based on the provided context. "
-                                 "If the context doesn't contain enough information to answer the question, "
-                                 "say so clearly. Always cite information from the context when possible."
-                    },
-                    {
-                        "role": "user",
-                        "content": prompt
-                    }
-                ],
-                max_tokens=500,
-                temperature=0.1,
-                top_p=0.9
+            # Configure generation parameters
+            generation_config = {
+                "temperature": 0.1,
+                "top_p": 0.9,
+                "top_k": 40,
+                "max_output_tokens": 300,
+            }
+            
+            # Generate answer using Gemini
+            response = self.model.generate_content(
+                prompt,
+                generation_config=generation_config
             )
             
-            answer = response.choices[0].message.content.strip()
-            logger.info("Answer generated successfully")
-            return answer
+            if response.text:
+                answer = response.text.strip()
+                logger.info("Answer generated successfully with Gemini")
+                return answer
+            else:
+                return "❌ Gemini did not generate a response. Please try again."
             
         except Exception as e:
             logger.error(f"Failed to generate answer: {e}")
-            return f"I encountered an error while generating an answer: {str(e)}"
+            if "quota" in str(e).lower() or "billing" in str(e).lower():
+                return f"💳 Gemini API quota exceeded. Please check your usage at https://console.cloud.google.com/"
+            elif "api_key" in str(e).lower():
+                return f"🔑 Invalid Gemini API key. Get one at https://makersuite.google.com/app/apikey"
+            else:
+                return f"❌ Gemini API error: {str(e)}"
     
     def _create_prompt(self, question: str, context: str) -> str:
         """Create a prompt for the language model."""
@@ -71,23 +76,26 @@ Please answer the question based on the provided context. If the context doesn't
 
     def generate_summary(self, text: str, max_length: int = 200) -> str:
         """Generate a summary of the given text."""
-        if not self.client:
-            return "Summary generation requires OpenAI API key."
+        if not self.model:
+            return "Summary generation requires Gemini API key."
         
         try:
-            response = self.client.chat.completions.create(
-                model=self.model,
-                messages=[
-                    {
-                        "role": "user",
-                        "content": f"Please summarize the following text in {max_length} words or less:\n\n{text}"
-                    }
-                ],
-                max_tokens=max_length * 2,  # Rough estimate for tokens
-                temperature=0.3
+            prompt = f"Please summarize the following text in {max_length} words or less:\n\n{text}"
+            
+            generation_config = {
+                "temperature": 0.3,
+                "max_output_tokens": max_length * 2,
+            }
+            
+            response = self.model.generate_content(
+                prompt,
+                generation_config=generation_config
             )
             
-            return response.choices[0].message.content.strip()
+            if response.text:
+                return response.text.strip()
+            else:
+                return "Summary generation failed: No response generated"
             
         except Exception as e:
             logger.error(f"Failed to generate summary: {e}")
