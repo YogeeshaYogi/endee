@@ -160,4 +160,3 @@ Perfect for personal projects, research, and small teams!
 
 ---
 
-Built with ❤️ using [Endee Vector Database](https://github.com/endee) and Google Gemini AI
